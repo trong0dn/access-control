@@ -1,16 +1,22 @@
-### enrolment mechanism and the proactive password checker
+#! /usr/bin/python3
+# -*- coding: utf-8 -*-
+# app/enrolment.py
+# Part of app, a package providing enrolment mechanism and the proactive password checker.
+#
+# Copyright © 2023 trong0dn
+
 import getpass
 import re
-from src.accesscontrol import Role
-from src.pwdfile import create_record
+from app.accesscontrol import Role
+from app.pwdfile import create_record
 
 
-SPECIAL_CHARACTERS = ['!', '@', '#', '$', '%', '?', '*']
+SPECIAL_CHARACTERS = {'!', '@', '#', '$', '%', '?', '*'}
 BLOCKLIST = "etc/blocklist.txt"
 
 
 def enrol_user() -> None:
-    """Enrol user to the system.
+    """Enrolment of the user to the system.
 
     Returns:
         None
@@ -35,7 +41,7 @@ def enrol_user() -> None:
         valid_role = False
         while (not valid_role):
             print([member.name for member in Role])
-            role = input("Select role: ")
+            role = input("Enter role: ")
             if role in Role.__members__:
                 valid_role = True
                 print("ROLE ACCEPTED")
@@ -49,9 +55,9 @@ def enrol_user() -> None:
 
 
 def password_policy(username: str, password: str) -> bool:
-    """Describes the password policy.
+    """Describes the proactive password policy checking.
 
-    Parameters:
+    Args:
         username (str): The unique id of the user.
         password (str): The plaintext password of the user.
 
@@ -85,7 +91,7 @@ def password_policy(username: str, password: str) -> bool:
 def add_disallowed_password(password: str) -> bool:
     """Add a disallowed password to the blocklist of paswords.
 
-    Parameters:
+    Args:
         password (str): The plaintext of the disallowed password.
 
     Returns:
@@ -98,8 +104,10 @@ def add_disallowed_password(password: str) -> bool:
             return False
         else:
             file.write(password)
-            return True
-        
+            return True        
 
-if __name__ == '__main__':
-    print(add_disallowed_password("Qwerty123"))
+
+# Local variables:
+# mode: python
+# End:
+# vim: filetype=python fileencoding=utf-8 :
