@@ -49,7 +49,7 @@ def enrol_user() -> None:
                 print("ROLE INVALID")
         
         if (valid_credentials and valid_role):
-            create_record(username, password, Role[role])
+            create_record(username, password, role)
             enrol = True
             print("ENROL SUCCESS")
 
@@ -99,12 +99,13 @@ def add_disallowed_password(password: str) -> bool:
    """
     with open(BLOCKLIST, 'r+') as file:
         blocklist = file.read()
-        file.close()
         if password in blocklist: # common weak passwords must be prohibited
+            file.close()
             return False
         else:
-            file.write(password)
-            return True        
+            file.write(str(password) +'\n')
+            file.close()
+            return True      
 
 
 # Local variables:

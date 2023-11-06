@@ -182,7 +182,7 @@ class Test_Role(unittest.TestCase):
                     self.assertFalse(value in params["keys"])
 
 
-def suite():
+def suite_accesscontrol():
     """ Create the test suite for this module. """
     from sys import modules
     loader = unittest.TestLoader()

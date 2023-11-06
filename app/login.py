@@ -8,7 +8,7 @@
 import sys
 import getpass
 from datetime import datetime
-from app.accesscontrol import Access, Resource, Role
+from app.accesscontrol import Role
 from app.pwdfile import verify_credential, retrieve_record
 from app.enrolment import enrol_user
 
@@ -45,7 +45,7 @@ def login_user() -> None:
                 print(f'> Permissions: {role.value}')
 
 
-def enforce_access_control(role: Role) -> bool:
+def enforce_access_control(role: str) -> bool:
     """Enforce the access control mechanism.
 
     Args:
@@ -54,17 +54,14 @@ def enforce_access_control(role: Role) -> bool:
     Returns:
         bool: True if the access control permission is granted, otherwise False. 
    """
-    if (role == Role['teller'] and ((datetime.now().hour < 8) or (datetime.now().hour > 17))):
+    if (Role[role] == Role['teller'] and ((datetime.now().hour < 8) or (datetime.now().hour > 17))):
         print("Tellers can only access the system during business hours from 9:00AM to 5:00PM.")
         return False
-    elif (role == Role['compliance_officer']):
-        print("Compliance Officers can validate modifications to investment portfolios.")
+    elif (Role[role] == Role['compliance_officer']):
+        # Compliance Officers can validate modifications to investment portfolios.
         return True
-    elif (role == Role['technical_support']):
-        print("Technical Support must request client account access to troubleshoot client's technical issues.")
-        request_account_access = input("Request account access (Y/N): ")
-        if (request_account_access == ('Y' or 'y')):
-            role.value.update({Resource.account_access : [Access.READ, Access.WRITE]})
+    elif (Role[role] == Role['technical_support']):
+        # Technical Support must request client account access to troubleshoot client's technical issues.
         return True
     else: 
         return True
@@ -92,10 +89,6 @@ def user_interface() -> None:
             sys.exit()
         else:
             print("INVALID COMMAND")
-
-
-if __name__ == '__main__':
-    user_interface()
 
 
 # Local variables:

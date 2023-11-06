@@ -5,4 +5,4 @@ Execute the main app:
 `python3 -m app`
 
 Execute the test suite:
-`python -m  tests`
+`python3 -m  unittest -b -v`

@@ -13,7 +13,7 @@ from app.accesscontrol import Role
 DATABASE = "etc/passwd.txt"
 
 
-def create_record(username: str, password: str, role: Role) -> bool:
+def create_record(username: str, password: str, role: str) -> bool:
     """Create a new record in the database when enrolling new users.
 
     Args:
@@ -33,8 +33,11 @@ def create_record(username: str, password: str, role: Role) -> bool:
     file.close()
     salt = uuid.uuid4().hex
     salted_hash = hash_function(password, salt)
-    add_record(username, salt, salted_hash, role)
-    return True
+    if role in Role.__members__:
+        add_record(username, salt, salted_hash, Role[role])
+        return True
+    else:
+        False
 
 
 def add_record(username: str, salt: str, salted_hash: str, role: Role) -> None:
@@ -107,11 +110,6 @@ def hash_function(password: str, salt: str) -> str:
         str: The salted hash value of the password and salt together.
    """
     return hashlib.sha256(password.encode() + salt.encode()).hexdigest()
-
-
-if __name__ == '__main__':
-    print(len(uuid.uuid4().hex))
-    create_record("jsmith", "pwd", Role.teller)
 
 
 # Local variables:

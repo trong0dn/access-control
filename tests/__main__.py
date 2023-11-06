@@ -5,8 +5,16 @@
 #
 # Copyright © 2023 trong0dn
 
+
+#  ----------------- Unit test framework
 import unittest
-from tests.test_accesscontrol import suite
+
+#  ----------------  Individual test suites
+from tests.test_accesscontrol import suite_accesscontrol
+from tests.test_enrolment import suite_enrolment
+from tests.test_pwdfile import suite_pwdfile
+from tests.test_login import suite_login
+
 
 def __main__(argv=None):
     """ Mainline function for this module. """
@@ -15,11 +23,10 @@ def __main__(argv=None):
         argv = _sys.argv
     exitcode = None
     try:
-        unittest.main(argv=argv, defaultTest='suite')
+        unittest.main(argv=argv)
     except SystemExit as exc:
         exitcode = exc.code
     return exitcode
-
 
 
 if __name__ == '__main__':
