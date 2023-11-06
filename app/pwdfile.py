@@ -19,7 +19,7 @@ def create_record(username: str, password: str, role: str) -> bool:
     Args:
         username (str): The unique id of the user.
         password (str): The plaintext password of the user.
-        role (Role): The role of a user has in the system.
+        role (str): The role of a user has in the system.
 
     Returns:
         bool: True if the record has been created, otherwise False. 
@@ -34,26 +34,26 @@ def create_record(username: str, password: str, role: str) -> bool:
     salt = uuid.uuid4().hex
     salted_hash = hash_function(password, salt)
     if role in Role.__members__:
-        add_record(username, salt, salted_hash, Role[role])
+        add_record(username, salt, salted_hash, role)
         return True
     else:
         False
 
 
-def add_record(username: str, salt: str, salted_hash: str, role: Role) -> None:
+def add_record(username: str, salt: str, salted_hash: str, role: str) -> None:
     """Add a new record to the database.
 
     Args:
         username (str): The unique id of the user.
         salt (str): The universally unique identifier as hexidecimal.
         salted_hash (str): The hash of the password and the salt together.
-        role (Role): The role of a user has in the system.
+        role (str): The role of a user has in the system.
 
     Returns:
         None
    """
     with open(DATABASE, 'a') as file:
-        record = f"{username}:{salt}:{salted_hash}:{role.name}\n"
+        record = f"{username}:{salt}:{salted_hash}:{role}\n"
         file.write(record)
         file.close()
 

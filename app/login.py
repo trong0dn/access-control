@@ -37,31 +37,31 @@ def login_user() -> None:
                 print("CREDENTIAL INCORRECT")
 
         if (valid_credentials):
-            role = Role[retrieve_record(username, password)]
+            role = retrieve_record(username, password)
             if (enforce_access_control(role)):
                 login = True
                 print(f'> Username: {username}')
                 print(f'> Role: {role}')
-                print(f'> Permissions: {role.value}')
+                print(f'> Permissions: {Role[role].value}')
 
 
 def enforce_access_control(role: str) -> bool:
     """Enforce the access control mechanism.
 
     Args:
-        role (Role): The role of a user has in the system.
+        role (str): The role of a user has in the system.
 
     Returns:
         bool: True if the access control permission is granted, otherwise False. 
    """
     if (Role[role] == Role['teller'] and ((datetime.now().hour < 8) or (datetime.now().hour > 17))):
-        print("Tellers can only access the system during business hours from 9:00AM to 5:00PM.")
+        print("=== Tellers can only access the system during business hours from 9:00AM to 5:00PM.")
         return False
     elif (Role[role] == Role['compliance_officer']):
-        # Compliance Officers can validate modifications to investment portfolios.
+        print("=== Compliance Officers can validate modifications to investment portfolios.")
         return True
     elif (Role[role] == Role['technical_support']):
-        # Technical Support must request client account access to troubleshoot client's technical issues.
+        print("=== Technical Support must request client account access to troubleshoot client's technical issues.")
         return True
     else: 
         return True
