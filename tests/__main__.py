@@ -6,14 +6,12 @@
 # Copyright © 2023 trong0dn
 
 
-#  ----------------- Unit test framework
 import unittest
 
-#  ----------------  Individual test suites
-from tests.test_accesscontrol import suite_accesscontrol
-from tests.test_enrolment import suite_enrolment
-from tests.test_pwdfile import suite_pwdfile
-from tests.test_login import suite_login
+from tests.test_Problem1e import suite_accesscontrol
+from tests.test_Problem2d import suite_enrolment
+from tests.test_Problem3d import suite_pwdfile
+from tests.test_Problem4d import suite_login
 
 
 def __main__(argv=None):

@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# app/accesscontrol.py
+# app/Problem1d.py
 # Part of app, a package providing access control mechanism.
 #
 # Copyright © 2023 trong0dn
@@ -33,45 +33,63 @@ class Resource(enum.Enum):
 
 class Role(enum.Enum):
     """Describes the entities capable of accessing Resources."""
-    regular_client = {
+    regular_client = enum.auto()
+    premium_client = enum.auto()
+    teller = enum.auto()
+    financial_advisor = enum.auto()
+    financial_planner = enum.auto()
+    investment_analyst = enum.auto()
+    compliance_officer = enum.auto()
+    technical_support = enum.auto()
+
+
+capabilities = {
+    Role.regular_client : {
         Resource.account_balance : [Access.READ],
         Resource.investment_portfolio : [Access.READ],
         Resource.advisor_contact : [Access.READ]
-    }
-    premium_client = regular_client.copy()
-    premium_client.update({
+    },
+    Role.premium_client : {
+        Resource.account_balance : [Access.READ],
         Resource.investment_portfolio : [Access.READ, Access.WRITE],
+        Resource.advisor_contact : [Access.READ],
         Resource.planner_contact : [Access.READ], 
         Resource.analyst_contact : [Access.READ]
-    })
-    teller = {
+    },
+    Role.teller : {
         Resource.account_balance : [Access.READ 
         if (not ((datetime.now().hour < 8) or (datetime.now().hour > 17))) else None],
         Resource.investment_portfolio : [Access.READ 
         if (not ((datetime.now().hour < 8) or (datetime.now().hour > 17))) else None]
-    }
-    financial_advisor = {
+    },
+    Role.financial_advisor : {
         Resource.account_balance : [Access.READ],
         Resource.investment_portfolio : [Access.READ, Access.WRITE],
         Resource.consumer_instruments : [Access.READ]
-    }
-    financial_planner = financial_advisor.copy()
-    financial_planner.update({
+    },
+    Role.financial_planner : {
+        Resource.account_balance : [Access.READ],
+        Resource.investment_portfolio : [Access.READ, Access.WRITE],
+        Resource.consumer_instruments : [Access.READ],
         Resource.market_instruments : [Access.READ]
-    })
-    investment_analyst = financial_planner.copy()
-    investment_analyst.update({
+    },
+    Role.investment_analyst : {
+        Resource.account_balance : [Access.READ],
+        Resource.investment_portfolio : [Access.READ, Access.WRITE],
+        Resource.consumer_instruments : [Access.READ],
+        Resource.market_instruments : [Access.READ],
         Resource.interest_instruments : [Access.READ],
         Resource.derivative_trading : [Access.READ]
-    })
-    compliance_officer = {
+    },
+    Role.compliance_officer : {
         Resource.account_balance : [Access.READ],
         Resource.investment_portfolio : [Access.READ, Access.OWN]
-    }
-    technical_support = {
+    },
+    Role.technical_support : {
         Resource.client_information : [Access.READ],
         Resource.account_access : None
     }
+}
 
 
 # Local variables:

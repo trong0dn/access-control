@@ -1,14 +1,14 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# app/enrolment.py
+# app/Problem3c.py
 # Part of app, a package providing enrolment mechanism and the proactive password checker.
 #
 # Copyright © 2023 trong0dn
 
 import getpass
 import re
-from app.accesscontrol import Role
-from app.pwdfile import create_record
+from app.Problem1d import Role, capabilities
+from app.Problem2c import create_record
 
 
 SPECIAL_CHARACTERS = {'!', '@', '#', '$', '%', '?', '*'}
@@ -42,7 +42,7 @@ def enrol_user() -> None:
         while (not valid_role):
             print([member.name for member in Role])
             role = input("Enter role: ")
-            if role in Role.__members__:
+            if Role[role] in capabilities:
                 valid_role = True
                 print("ROLE ACCEPTED")
             else:

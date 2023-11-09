@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# tests/test_pwdfile.py
+# tests/test_Problem2d.py
 # Part of test, a package providing testing password file mechanism.
 #
 # Copyright © 2023 trong0dn
@@ -9,7 +9,7 @@
     """
 
 import unittest
-import app.pwdfile as pwdfile
+import app.Problem2c as pwdfile
 
 
 DATABASE = "etc/passwd.txt"

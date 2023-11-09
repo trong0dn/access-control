@@ -31,10 +31,10 @@ access-control
 |   README.md
 |
 +---app
-|       accesscontrol.py
-|       enrolment.py
-|       login.py
-|       pwdfile.py
+|       Problem1d.py
+|       Problem2c.py
+|       Problem3c.py
+|       Problem4c.py
 |       __init__.py
 |       __main__.py
 |
@@ -43,16 +43,16 @@ access-control
 |       passwd.txt
 |
 \---tests
-        test_accesscontrol.py
-        test_enrolment.py
-        test_login.py
-        test_pwdfile.py
+        test_Problem1e.py
+        test_Problem2d.py
+        test_Problem3c.py
+        test_Problem4c.py
         __init__.py
         __main__.py
 ```
 
 ## File description
-* `accesscontrol.py` : Implementation of the access control mechanism
-* `pwdfile.py` : Implementation of the hash function and the password file
-* `enrolment.py` : Implementation of the enrolment mechanism and the proactive password checker
-* `login.py` : Implementation the password verification mechanism and enforcement of the access control mechanism
+* `Problem1d.py` : Implementation of the access control mechanism
+* `Problem2c.py` : Implementation of the hash function and the password file
+* `Problem3c.py` : Implementation of the enrolment mechanism and the proactive password checker
+* `Problem4c.py` : Implementation the password verification mechanism and enforcement of the access control mechanism

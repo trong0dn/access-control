@@ -1,13 +1,13 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# app/pwdfile.py
+# app/Problem2c.py
 # Part of app, a package providing password file mechanism.
 #
 # Copyright © 2023 trong0dn
 
 import hashlib 
 import uuid
-from app.accesscontrol import Role
+from app.Problem1d import Role
 
 
 DATABASE = "etc/passwd.txt"

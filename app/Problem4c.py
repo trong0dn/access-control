@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# app/login.py
+# app/Problem4c.py
 # Part of app, a package providing password verification mechanism.
 #
 # Copyright © 2023 trong0dn
@@ -8,9 +8,9 @@
 import sys
 import getpass
 from datetime import datetime
-from app.accesscontrol import Role
-from app.pwdfile import verify_credential, retrieve_record
-from app.enrolment import enrol_user
+from app.Problem1d import Role, capabilities
+from app.Problem2c import verify_credential, retrieve_record
+from app.Problem3c import enrol_user
 
 
 def login_user() -> None:
@@ -42,7 +42,7 @@ def login_user() -> None:
                 login = True
                 print(f'> Username: {username}')
                 print(f'> Role: {role}')
-                print(f'> Permissions: {Role[role].value}')
+                print(f'> Permissions: {capabilities.get(Role[role])}')
 
 
 def enforce_access_control(role: str) -> bool:
@@ -55,13 +55,13 @@ def enforce_access_control(role: str) -> bool:
         bool: True if the access control permission is granted, otherwise False. 
    """
     if (Role[role] == Role['teller'] and ((datetime.now().hour < 8) or (datetime.now().hour > 17))):
-        print("=== Tellers can only access the system during business hours from 9:00AM to 5:00PM.")
+        # Tellers can only access the system during business hours from 9:00AM to 5:00PM.
         return False
     elif (Role[role] == Role['compliance_officer']):
-        print("=== Compliance Officers can validate modifications to investment portfolios.")
+        # Compliance Officers can validate modifications to investment portfolios.
         return True
     elif (Role[role] == Role['technical_support']):
-        print("=== Technical Support must request client account access to troubleshoot client's technical issues.")
+        # Technical Support must request client account access to troubleshoot client's technical issues.
         return True
     else: 
         return True

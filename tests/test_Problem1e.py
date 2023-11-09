@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# tests/test_accesscontrol.py
+# tests/test_Problem1e.py
 # Part of test, a package providing testing access control mechanism.
 #
 # Copyright © 2023 trong0dn
@@ -9,7 +9,7 @@
     """
 
 import unittest
-from app.accesscontrol import Access, Resource, Role
+from app.Problem1d import Access, Resource, Role, capabilities
 
 
 def setup_fixtures(testcase):

@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# tests/test_enrolment.py
+# tests/test_Problem3d.py
 # Part of test, a package providing testing enrolment mechanism and the proactive password checker.
 #
 # Copyright © 2023 trong0dn
@@ -10,7 +10,7 @@
 
 import os
 import unittest
-import app.enrolment as enrolment
+import app.Problem3c as enrolment
 
 
 BLOCKLIST = "etc/blocklist.txt"

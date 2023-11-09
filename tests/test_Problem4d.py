@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
-# tests/test_login.py
+# tests/test_Problem4d.py
 # Part of test, a package providing testing password verification mechanism.
 #
 # Copyright © 2023 trong0dn
@@ -9,7 +9,7 @@
     """
 
 import unittest
-import app.login as login
+import app.Problem4c as login
 from datetime import datetime
 
 
