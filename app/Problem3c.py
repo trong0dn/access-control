@@ -34,10 +34,17 @@ def enrol_user() -> None:
 
             if (password_policy(username, password)):
                 valid_credentials = True
-                print("CREDENTIAL ACCEPTED")
+                valid_gecos = False
+                while (not valid_gecos):
+                    gecos = input("Enter user’s full name: ")
+                    if not (':' in gecos): # prevent gecos containing the character delimiter
+                        valid_gecos = True
+                        print("CREDENTIAL ACCEPTED")
+                    else: 
+                        print("CREDENTIAL DENIED")
             else:
                 print("CREDENTIAL DENIED")
-        
+                
         valid_role = False
         while (not valid_role):
             print([member.name for member in Role])
@@ -49,9 +56,11 @@ def enrol_user() -> None:
                 print("ROLE INVALID")
         
         if (valid_credentials and valid_role):
-            create_record(username, password, role)
-            enrol = True
-            print("ENROL SUCCESS")
+            if (create_record(username, password, role, gecos)):
+                enrol = True
+                print("ENROL SUCCESS")
+            else:
+                print("ACCOUNT ALREADY EXISTS") 
 
 
 def password_policy(username: str, password: str) -> bool:
@@ -70,7 +79,8 @@ def password_policy(username: str, password: str) -> bool:
         any(x.islower() for x in password) and # include at least one lower-case letter
         any(x.isdigit() for x in password) and # include at least one numerical digit
         any(x in SPECIAL_CHARACTERS for x in password) and # include at least one special character
-        not (password == username) # matching the user ID must be prohibited
+        not (password == username) and # matching the user ID must be prohibited
+        not (':' in password or ':' in username) # prevent username or password containing the character delimiter
     ):
         if (
             not (re.search("^\d{4}-\d{2}-\d{2}$", password)) and # format of calendar dates prohibited

@@ -37,12 +37,15 @@ def login_user() -> None:
                 print("CREDENTIAL INCORRECT")
 
         if (valid_credentials):
-            role = retrieve_record(username, password)
+            gid = retrieve_record(username, password)
+            role = Role(int(gid)).name
             if (enforce_access_control(role)):
                 login = True
                 print(f'> Username: {username}')
                 print(f'> Role: {role}')
                 print(f'> Permissions: {capabilities.get(Role[role])}')
+            else:
+                print("User does not have access")
 
 
 def enforce_access_control(role: str) -> bool:
