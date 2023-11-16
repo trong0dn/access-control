@@ -14,7 +14,7 @@ from app.Problem3c import enrol_user
 
 
 def login_user() -> None:
-    """Login user to the system.
+    """Login interface of the user to the system.
 
     Returns:
         None

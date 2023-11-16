@@ -16,7 +16,7 @@ BLOCKLIST = "etc/blocklist.txt"
 
 
 def enrol_user() -> None:
-    """Enrolment of the user to the system.
+    """Enrolment interface of the user to the system.
 
     Returns:
         None
@@ -36,14 +36,14 @@ def enrol_user() -> None:
                 valid_credentials = True
                 valid_gecos = False
                 while (not valid_gecos):
-                    gecos = input("Enter user’s full name: ")
-                    if not (':' in gecos): # prevent gecos containing the character delimiter
+                    gecos = input("Enter user full name: ")
+                    if not (':' in gecos): # prohibit gecos containing the character delimiter
                         valid_gecos = True
-                        print("CREDENTIAL ACCEPTED")
+                        print("FULLNAME ACCEPTED")
                     else: 
-                        print("CREDENTIAL DENIED")
+                        print("FULLNAME DENIED")
             else:
-                print("CREDENTIAL DENIED")
+                print("Does not comply with password policy")
                 
         valid_role = False
         while (not valid_role):
@@ -60,7 +60,7 @@ def enrol_user() -> None:
                 enrol = True
                 print("ENROL SUCCESS")
             else:
-                print("ACCOUNT ALREADY EXISTS") 
+                print("Account already exists") 
 
 
 def password_policy(username: str, password: str) -> bool:
@@ -80,13 +80,15 @@ def password_policy(username: str, password: str) -> bool:
         any(x.isdigit() for x in password) and # include at least one numerical digit
         any(x in SPECIAL_CHARACTERS for x in password) and # include at least one special character
         not (password == username) and # matching the user ID must be prohibited
-        not (':' in password or ':' in username) # prevent username or password containing the character delimiter
+        not (':' in password or ':' in username) # username or password containing the character delimiter prohibited
     ):
         if (
-            not (re.search("^\d{4}-\d{2}-\d{2}$", password)) and # format of calendar dates prohibited
-            not (re.search("^[A-Z0-9]{7}$", password)) and  # format of license plate numbers prohibited
-            not (re.search("^\d{3}-\d{3}-\d{4}$", password)) and  # format of telephone numbers prohibited
-            not (re.search("^\d{1-12}$", password)) # common numbers must be prohibited
+            (not password == username) or # matching the user ID must be prohibited
+            (not (':' in password or ':' in username)) or # username or password containing the character delimiter prohibited
+            (not re.search("^\d{4}-\d{2}-\d{2}$", password)) or # format of calendar dates prohibited
+            (not re.search("^[A-Z0-9]{7}$", password)) or  # format of license plate numbers prohibited
+            (not re.search("^\d{3}-\d{4}$", password))   # format of telephone numbers prohibited
+            (not re.search("^\d{5-12}$", password)) # common numbers must be prohibited
         ):
             with open(BLOCKLIST, 'r') as file:
                 blocklist = file.read()
@@ -109,7 +111,7 @@ def add_disallowed_password(password: str) -> bool:
    """
     with open(BLOCKLIST, 'r+') as file:
         blocklist = file.read()
-        if password in blocklist: # common weak passwords must be prohibited
+        if password in blocklist:
             file.close()
             return False
         else:

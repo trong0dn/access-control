@@ -53,9 +53,9 @@ def add_record(username: str, salt: str, salted_hash: str, role: str, gecos: str
    """
     with open(DATABASE, 'a') as file:
         gid = Role[role].value
-        homedir = "/home/" + username
+        home_dir = "/home/" + username
         shell = "/bin/bash"
-        record = f"{username}:{salt}:{salted_hash}:{gid}:{gecos}:{homedir}:{shell}\n"
+        record = f"{username}:{salt}:{salted_hash}:{gid}:{gecos}:{home_dir}:{shell}\n"
         file.write(record)
         file.close()
 
